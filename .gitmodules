@@ -1,0 +1,3 @@
+[submodule "external/endless_errors"]
+	path = external/endless_errors
+	url = git@github.com:scones/endless_errors.git
