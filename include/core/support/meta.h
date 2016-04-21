@@ -20,6 +20,10 @@
 #include <string>
 #include <type_traits>
 
+#ifdef DEBUG
+#include <cassert>
+#endif
+
 
 using namespace std;
 
