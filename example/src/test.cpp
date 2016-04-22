@@ -21,11 +21,26 @@ int call(print_function, T const& value, std::ostream& out, std::size_t position
 }
 
 
+template <>
+int call(print_function, std::string const& value, std::ostream& out, std::size_t position) {
+  out << '"' << value << '"';
+
+  return 0;
+}
+
+
+template <>
+int call(print_function, char* const& value, std::ostream& out, std::size_t position) {
+  out << '"' << value << '"';
+
+  return 0;
+}
+
+
 template <typename T>
 int call(print_function, core::support::meta_detail::attribute<T> const& value, std::ostream& out, std::size_t position) {
   out << std::string(position, ' ') << '"' << value.get_name() << "\": ";
   print(value.get_value(), out, position);
-  out << std::endl;
 
   return 0;
 }
@@ -34,9 +49,13 @@ int call(print_function, core::support::meta_detail::attribute<T> const& value, 
 template <typename T>
 int call(print_function, std::vector<T> const& some_vector, std::ostream& out, std::size_t position) {
   out << std::string(position, ' ') << "{" << std::endl;
-  for (auto& value : some_vector)
-    print(value, out, position + 2);
-  out << std::string(position, ' ') << "}" << std::endl;
+  for (std::uint64_t i(0); i < some_vector.size(); ++i) {
+    print(some_vector[i], out, position + 2);
+    if (i != some_vector.size() -1)
+      out << ',';
+    out << std::endl;
+  }
+  out << std::string(position, ' ') << "}" << std::flush;
 
   return 0;
 }
