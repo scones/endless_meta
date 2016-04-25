@@ -13,6 +13,7 @@ META_CALLABLE(print);
 
 using printable = core::support::meta<int(print_function, core::support::self const&, std::ostream&, std::size_t)>;
 
+
 template <typename T>
 int call(print_function, T const& value, std::ostream& out, std::size_t position) {
   out << value;
@@ -68,10 +69,10 @@ int main(int argc, char** argv) {
   object_type object;
 
   object.reserve(4);
-  object.push_back(core::support::meta_detail::attribute<int>("foo", 1));
-  object.push_back(core::support::meta_detail::attribute<std::string>("bar", "foo"));
-  object.push_back(core::support::meta_detail::attribute<object_type>("meh", object));
-  object.push_back(core::support::meta_detail::attribute<std::uint64_t>("bla", std::uint64_t(123)));
+  object.push_back(core::support::meta_detail::attribute<int>("foo", 1, core::support::meta_detail::type::NUMBER, true));
+  object.push_back(core::support::meta_detail::attribute<std::string>("bar", "foo", core::support::meta_detail::type::STRING, true));
+  object.push_back(core::support::meta_detail::attribute<object_type>("meh", object, core::support::meta_detail::type::OBJECT, true));
+  object.push_back(core::support::meta_detail::attribute<std::uint64_t>("bla", std::uint64_t(123), core::support::meta_detail::type::NUMBER, true));
 
   print(object, std::cout, 0);
 

@@ -1,6 +1,6 @@
 CC             = g++
 
-INCLUDES       = -Iinclude -I../include -I../external/endless_events/include -I/c/msys64/mingw64/include -I/c/msys64/mingw64/x86_64-w64-mingw32/include
+INCLUDES       = -Iinclude -I../include -I../external/endless_events/include -I../external/endless_errors/include -I/c/msys64/mingw64/include -I/c/msys64/mingw64/x86_64-w64-mingw32/include
 EXECUTABLE_SUFFIX = 
 ifeq ($(MSYSTEM), MINGW64)
 	EXECUTABLE_SUFFIX = .exe
@@ -12,7 +12,7 @@ ifeq ($(MSYSTEM), MSYS)
 	INCLUDES += -I/mingw64/include/freetype2 -IC:/msys64/mingw64/include/freetype2
 endif
 
-CFLAGS         = $(INCLUDES) -c -Wall -pedantic -std=c++14 -finput-charset=UTF-8 -DGLEW_STATIC -DDEBUG
+CFLAGS         = $(INCLUDES) -c -Wall -pedantic -std=c++14 -finput-charset=UTF-8 -DGLEW_STATIC -DDEBUG -DWITH_DUKTAPE
 ifdef RELEASE
   CFLAGS += -O2 -fomit-frame-pointer
 endif
@@ -26,7 +26,7 @@ LIBS_STATIC_UI        =
 LIBS_STATIC_OPENGL    =
 LIBS_STATIC_FREETYPE  =
 LIBS_STATIC_BOOST     = -lboost_system-mt -lboost_program_options-mt -lboost_filesystem-mt
-LIBS_STATIC_SYSTEM    =
+LIBS_STATIC_SYSTEM    = -lendless_meta
 LIBS_STATIC_JS        = -lduktape
 LIBS_SHARED_SYSTEM    =
 

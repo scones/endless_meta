@@ -77,6 +77,11 @@ namespace core {
       }
 
 
+      inline char const* to_string(std::int32_t index = DEFAULT_STACK_POSITION) {
+        return duk_to_string(m_context, index);
+      }
+
+
       inline char const* push_string(std::string const& input) {
         return duk_push_string(m_context, input.c_str());
       }
@@ -103,6 +108,11 @@ namespace core {
       std::int32_t get_int(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
         ++m_stack_depth;
         return duk_get_int(m_context, stack_index);
+      }
+
+      auto get_boolean(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
+        ++m_stack_depth;
+        return duk_get_boolean(m_context, stack_index);
       }
 
       void pop() {
@@ -146,6 +156,51 @@ namespace core {
 
       bool is_array(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
         return duk_is_array(m_context, stack_index);
+      }
+
+
+      bool is_object(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
+        return duk_is_object(m_context, stack_index);
+      }
+
+
+      bool is_number(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
+        return duk_is_number(m_context, stack_index);
+      }
+
+
+      bool is_boolean(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
+        return duk_is_boolean(m_context, stack_index);
+      }
+
+
+      bool is_nan(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
+        return duk_is_nan(m_context, stack_index);
+      }
+
+
+      bool is_null(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
+        return duk_is_null(m_context, stack_index);
+      }
+
+
+      bool is_string(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
+        return duk_is_string(m_context, stack_index);
+      }
+
+
+      bool is_undefined(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
+        return duk_is_undefined(m_context, stack_index);
+      }
+
+
+      bool is_pointer(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
+        return duk_is_pointer(m_context, stack_index);
+      }
+
+
+      std::int32_t get_type(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
+        return duk_get_type(m_context, stack_index);
       }
 
 
