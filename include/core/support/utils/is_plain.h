@@ -16,10 +16,14 @@ namespace core {
 
   namespace support {
 
-    template <typename T> struct is_plain            : std::true_type {};
-    template <typename T> struct is_plain<T &>       : std::false_type {};
-    template <typename T> struct is_plain<T const>   : std::false_type {};
-    template <typename T> struct is_plain<T const &> : std::false_type {};
+    namespace utils {
+
+      template <typename T> struct is_plain            : std::true_type {};
+      template <typename T> struct is_plain<T &>       : std::false_type {};
+      template <typename T> struct is_plain<T const>   : std::false_type {};
+      template <typename T> struct is_plain<T const &> : std::false_type {};
+
+    }
 
   }
 
