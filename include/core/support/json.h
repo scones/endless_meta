@@ -89,7 +89,6 @@ namespace core {
               result.push_back(meta_detail::attribute<std::string>(key, std::move(pduk->get_string()), type, children_have_prefix));
               break;
             case DUK_TYPE_OBJECT: {
-              meta_vector tmp;
               result.push_back(json::parse<signature_types...>(key, pduk, children_have_prefix));
               break;
             }
