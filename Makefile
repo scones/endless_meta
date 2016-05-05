@@ -12,22 +12,20 @@ find = $(foreach dir,$(1),$(foreach d,$(wildcard $(dir)/*),$(call find,$(d),$(2)
 
 SOURCES_LIB       = $(call find, ./src, *.cpp)
 SOURCES_LIB      += $(call find, ./external/endless_errors/src, *.cpp)
-SOURCES           = main.cpp
+SOURCES           = 
 OBJECTS           = $(SOURCES:.cpp=.o)
 OBJECTS_LIB       = $(SOURCES_LIB:.cpp=.o)
 STATIC_TARGET     = lib/libendless_meta.a
-EXECUTABLE_TARGET = endless_meta.exe
+EXECUTABLE_TARGET =
 
 
 .PHONY: all check example clean
 
 
-all: $(SOURCES) $(STATIC_TARGET) $(EXECUTABLE_TARGET) check
-#	./$(EXECUTABLE_TARGET)
+all: $(SOURCES) $(STATIC_TARGET) check example
 
 
 $(EXECUTABLE_TARGET): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $@ $(LDFLAGS) -lendless_meta -ggdb
 
 
 $(STATIC_TARGET): $(OBJECTS_LIB)
@@ -38,15 +36,19 @@ check: $(STATIC_TARGET)
 	+$(MAKE) -C ./tests check
 
 
+example: $(STATIC_TARGET)
+	+$(MAKE) -C ./example all
+
+
 .cpp.o:
 	$(CC) ${CFLAGS} $< -o $@
 
 
 clean:
 	$(MAKE) -C ./tests clean
+	$(MAKE) -C ./example clean
 	rm -f $(OBJECTS_LIB)
 	rm -f $(OBJECTS)
 	rm -f $(STATIC_TARGET)
-	rm -f $(EXECUTABLE_TARGET)
 	rm -f gmon.out
 
