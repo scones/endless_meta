@@ -22,11 +22,7 @@ namespace core {
 
   namespace error {
 
-    class duktape_error : public core::error::error {
-
-
-      public:
-
+    struct duktape_error : public core::error::error {
 
       duktape_error(std::string const& what) : core::error::error(what) {
       }
