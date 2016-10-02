@@ -21,10 +21,7 @@ namespace core {
 
   namespace support {
 
-    class duktape {
-
-      public:
-
+    struct duktape {
 
       duktape() : m_stack_depth(0) {
         m_context = duk_create_heap(nullptr, nullptr, nullptr, nullptr, core::error::duktape_error::error_handler);
@@ -86,54 +83,65 @@ namespace core {
         return duk_push_string(m_context, input.c_str());
       }
 
+
       inline void json_decode(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
         ++m_stack_depth;
         duk_json_decode(m_context, stack_index);
       }
+
 
       inline bool get_prop_string(std::string const& property_name, std::int32_t stack_index = DEFAULT_STACK_POSITION) {
         ++m_stack_depth;
         return duk_get_prop_string(m_context, stack_index, property_name.c_str());
       }
 
+
       std::uint32_t get_top() {
         return duk_get_top(m_context);
       }
+
 
       const char* get_string(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
         ++m_stack_depth;
         return duk_get_string(m_context, stack_index);
       }
 
+
       std::int32_t get_int(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
         ++m_stack_depth;
         return duk_get_int(m_context, stack_index);
       }
+
 
       auto get_boolean(std::int32_t stack_index = DEFAULT_STACK_POSITION) {
         ++m_stack_depth;
         return duk_get_boolean(m_context, stack_index);
       }
 
+
       void pop() {
         --m_stack_depth;
         duk_pop(m_context);
       }
+
 
       void pop_2() {
         m_stack_depth -= 2;
         duk_pop_2(m_context);
       }
 
+
       void pop_3() {
         m_stack_depth -= 3;
         duk_pop_3(m_context);
       }
 
+
       void pop_n(std::uint32_t count) {
         m_stack_depth -= count;
         duk_pop_n(m_context, count);
       }
+
 
       std::string get_string_property(std::string const& property_name, std::int32_t stack_index = DEFAULT_STACK_POSITION) {
         get_prop_string(property_name.c_str());
@@ -142,12 +150,14 @@ namespace core {
         return result;
       }
 
+
       std::int32_t get_int_property(std::string const& property_name, std::int32_t stack_index = DEFAULT_STACK_POSITION) {
         get_prop_string(property_name.c_str());
         std::int32_t result = get_int(stack_index);
         pop();
         return result;
       }
+
 
       bool has_property(std::string const& property_name, std::int32_t stack_index = DEFAULT_STACK_POSITION) {
         return duk_has_prop_string(m_context, stack_index, property_name.c_str());
